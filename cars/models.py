@@ -69,4 +69,4 @@ class Car(models.Model):
         max_length=10,
         choices=MODEL_CHOICES,
         blank=False,
-        verbose_name='молель авто')
+        verbose_name='модель авто')
