@@ -1,0 +1,12 @@
+/* Global Styles */
+
+.site-name {
+  text-align: center;
+  color: #003366;
+}
+
+/* Footer Styles */
+#footer {
+  border-top: 1px solid #dddddd;
+  padding-top: 10px;
+}
