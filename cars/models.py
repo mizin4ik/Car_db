@@ -32,41 +32,50 @@ class Car(models.Model):
         )
 
     BRAND_CHOICES = (
-        ('AU', 'Audi'),
-        ('TY', 'Toyota'),
-        ('TS', 'Tesla'),
-        ('PS', 'Porsche')
+        ('Au', 'Audi'),
+        ('To', 'Toyota'),
+        ('Te', 'Tesla'),
+        ('Po', 'Porsche')
     )
     brand = models.CharField(
         max_length=2,
         choices=BRAND_CHOICES,
         verbose_name='Марка авто',
-        blank=False)
+        null=False,
+        blank=False
+    )
 
     MADE_YEAR_CHOICES = (
-        ('1800', 'To 1990'),
-        ('1990', 'From 1990 to 2000'),
-        ('2000', 'From 2000 to 2010'),
-        ('2010', 'From 2000')
+        ('1', 'To 1990'),
+        ('2', 'From 1990 to 2000'),
+        ('3', 'From 2000 to 2010'),
+        ('4', 'From 2000')
     )
     category = models.CharField(
         max_length=4,
         choices=MADE_YEAR_CHOICES,
         verbose_name='категорія по року виготовлення',
-        blank=False)
+        null=False,
+        blank=False
+    )
 
     MODEL_CHOICES = (
-        ('A6', 'Audi A6'),
-        ('A8', 'Audi A6'),
-        ('Q5', 'Audi Q5'),
-        ('Aristo', 'Toyota Aristo'),
-        ('Camry', 'Touota Camry'),
-        ('ModelX', 'Tesla Model X 100D Premium'),
-        ('Panamera', 'Porshe Panamera'),
-        ('Cayman', 'Pordhe Cayman'),
+        ('audi_a6', 'Audi A6'),
+        ('audi_a8', 'Audi A8'),
+        ('audi_q5', 'Audi Q5'),
+        ('toyota_aristo', 'Toyota Aristo'),
+        ('toyota_camry', 'Toyota Camry'),
+        ('tesla_model_x', 'Tesla Model X 100D Premium'),
+        ('porshe_panamera', 'Porshe Panamera'),
+        ('porshe_cayman', 'Porshe Cayman'),
     )
-    models = models.CharField(
-        max_length=10,
+    model = models.CharField(
+        max_length=20,
         choices=MODEL_CHOICES,
+        null=False,
         blank=False,
-        verbose_name='модель авто')
+        verbose_name='модель авто'
+    )
+
+    def __str__(self):
+        return f'{self.get_model_display()}'
