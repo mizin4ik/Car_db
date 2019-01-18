@@ -1,0 +1,118 @@
+{% load static %}
+{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+    <!DOCTYPE html>
+    <html lang="uk">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Платформа продажу автомобілей</title>
+        <meta name="description" value="Платформа продажу автомобілей" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'cars/css/bootstrap-slider.min.css' %}">
+        <link rel="stylesheet" href="{% static 'cars/css/main.css' %}">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <script src="{% static 'cars/js/bootstrap-slider.min.js' %}"></script>
+    </head>
+    <body>
+
+    <!-- Start Container -->
+    <div class="container">
+
+        <!-- Start Header -->
+        <div class="row" id="header">
+            <div class="col-xs-12 site-name">
+                <h1>Автомобілі для Вас</h1>
+            </div>
+        </div>
+        <!-- End Header -->
+
+        <!-- Start Content Columns -->
+        <div class="row" id="content-columns">
+            <div class="col-xs-12" id="content-column">
+                <h2>Доступні автомобілі</h2><br>
+
+
+                <!-- Start filter button -->
+                <form action="." method="get" enctype="multipart/form-data" role="form">
+                    <b>{{ cars_years.year__min }}</b>&#8195;
+                    <input name="years" id="carYears" type="text" value="" data-slider-min="{{ cars_years.year__min }}" data-slider-max="{{ cars_years.year__max }}" data-slider-step="1" data-slider-value="[{% if res %}{{ res.0 }},{{ res.1 }}{% else %}{{ cars_years.year__min }},{{ cars_years.year__max }}{% endif %}]"/>
+                    &#8195; <b>{{ cars_years.year__max }}</b>&#8195;&#8195;
+                    <input type="submit" value="Submit">
+                    <br>
+
+                    <!-- End filter button -->
+
+                    <!-- Start Students Listing -->
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><a href="{% url "home" %}?order_by=id{% if order_by == "id" and reverse != "1" %}&amp;reverse=1{% endif %}{% if res %}&years={{ res.0 }},{{ res.1 }}{% endif %}">
+                                #
+                                {% if order_by == "id" and reverse != "1"%} &uarr;
+                                {% elif order_by == "id" and reverse == "1"%} &darr;
+                                {% endif %}
+                            </a>
+                            </th>
+                            <th><a href="{% url 'home' %}?order_by=brand{% if order_by == 'brand' and reverse != '1' %}&amp;reverse=1{% endif %}{% if res %}&years={{ res.0 }},{{ res.1 }}{% endif %}">
+                                Марка
+                                {% if order_by == 'brand' and reverse != '1'%}&uarr;
+                                    {% elif order_by == 'brand' and reverse == '1' %}&darr;
+                                {% endif %}
+                            </a></th>
+                            <th><a href="{% url 'home' %}?order_by=model{% if order_by == 'model' and reverse != '1' %}&amp;reverse=1{% endif %}{% if res %}&years={{ res.0 }},{{ res.1 }}{% endif %}">
+                                Модель
+                                {% if order_by == 'model' and reverse != '1'%}&uarr;
+                                    {% elif order_by == 'model' and reverse == '1' %}&darr;
+                                {% endif %}
+                            </a></th>
+                            <th><a href="{% url 'home' %}?order_by=category{% if order_by == 'category' and reverse != '1' %}&amp;reverse=1{% endif %}{% if res %}&years={{ res.0 }},{{ res.1 }}{% endif %}">Категорія
+                                {% if order_by == 'category' and reverse != '1'%}&uarr;
+                                    {% elif order_by == 'category' and reverse == '1' %}&darr;
+                                {% endif %}
+                            </a></th>
+                            <th><a href="{% url 'home' %}?order_by=price{% if order_by == 'price' and reverse != '1' %}&amp;reverse=1{% endif %}{% if res %}&years={{ res.0 }},{{ res.1 }}{% endif %}">
+                                Ціна
+                                {% if order_by == 'price' and reverse != '1'%}&uarr;
+                                    {% elif order_by == 'price' and reverse == '1' %}&darr;
+                                {% endif %}
+                            </a></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%  for car in cars %}
+                            <tr>
+                                <td>{{ car.id }}</td>
+                                <td>{{ car.get_brand_display }}</td>
+                                <td>{{ car.get_model_display }}</td>
+                                <td>{{ car.get_category_display }}</td>
+                                <td>{{ car.price }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                <!-- End Students Listing -->
+                </form>
+            </div>
+        </div>
+        <!-- End Content Columns -->
+
+        <!-- Start Footer -->
+        <div class="row" id="footer">
+            <div class="col-xs-12">
+                &copy; Розробка <a href="https://www.linkedin.com/in/viktoria-kit/">Вікторія Кіт</a>
+            </div>
+        </div>
+        <!-- End Footer -->
+
+    </div>
+    <!-- End Container -->
+
+    <!-- Javascripts Inclusion -->
+    <script src="{% static 'cars/js/main.js' %}"></script>
+    </body>
+    </html>
+
+{% endwith %}

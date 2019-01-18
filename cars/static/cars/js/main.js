@@ -1,0 +1,1 @@
+const yearsSlider = $("#carYears").slider({});
